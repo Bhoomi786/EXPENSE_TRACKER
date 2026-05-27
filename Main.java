@@ -5,6 +5,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class Main extends JFrame {
 
+    JPanel sidebar;
+
     JTextField titleField;
     JTextField amountField;
 
@@ -16,6 +18,16 @@ public class Main extends JFrame {
     JLabel totalLabel;
 
     double totalExpense = 0;
+
+    boolean darkMode = true;
+
+    Color darkBg = new Color(30, 30, 30);
+    Color darkPanel = new Color(45, 45, 45);
+    Color darkText = Color.WHITE;
+
+    Color lightBg = Color.WHITE;
+    Color lightPanel = new Color(240, 240, 240);
+    Color lightText = Color.BLACK;
 
     public Main() {
 
@@ -29,7 +41,7 @@ public class Main extends JFrame {
         JPanel mainPanel = new JPanel(new BorderLayout());
 
         // Sidebar
-        JPanel sidebar = new JPanel();
+        sidebar = new JPanel();
         sidebar.setPreferredSize(new Dimension(220, 600));
         sidebar.setBackground(new Color(25, 25, 25));
         sidebar.setLayout(new GridLayout(8, 1, 10, 10));
@@ -41,6 +53,7 @@ public class Main extends JFrame {
         JButton dashboardBtn = new JButton("Dashboard");
         JButton addBtn = new JButton("Add Expense");
         JButton analyticsBtn = new JButton("Analytics");
+        JButton themeButton = new JButton("Toggle Theme");
 
         styleButton(dashboardBtn);
         styleButton(addBtn);
@@ -58,6 +71,7 @@ public class Main extends JFrame {
 
         // Heading
         JLabel heading = new JLabel("Expense Manager");
+        heading.setForeground(Color.BLACK);
         heading.setFont(new Font("Arial", Font.BOLD, 28));
         heading.setBounds(40, 20, 400, 40);
 
@@ -89,6 +103,20 @@ public class Main extends JFrame {
 
         categoryBox = new JComboBox<>(categories);
         categoryBox.setBounds(140, 220, 220, 35);
+
+        JLabel themeLabel = new JLabel("Theme");
+
+        themeLabel.setBounds(760, 40, 100, 30);
+
+        themeLabel.setFont(new Font("Arial", Font.BOLD, 18));
+
+        String[] themes = {"Dark", "Light"};
+
+        JComboBox<String> themeBox =
+        new JComboBox<>(themes);
+        themeBox.setSelectedItem("Light");
+
+        themeBox.setBounds(840, 40, 140, 35);
 
         // Buttons
         JButton saveBtn = new JButton("Save Expense");
@@ -136,6 +164,9 @@ public class Main extends JFrame {
 
         content.add(categoryLabel);
         content.add(categoryBox);
+
+        content.add(themeLabel);
+        content.add(themeBox);
 
         content.add(saveBtn);
 
@@ -222,6 +253,64 @@ public class Main extends JFrame {
             }
         });
 
+        //add theme
+        themeBox.addActionListener(e -> {
+
+            String selectedTheme =
+            (String) themeBox.getSelectedItem();
+
+            if(selectedTheme.equals("Dark")) {
+
+                content.setBackground(new Color(30,30,30));
+
+                sidebar.setBackground(new Color(15,15,15));
+
+                table.setBackground(new Color(45,45,45));
+                table.setForeground(Color.WHITE);
+                totalLabel.setForeground(Color.WHITE);
+
+                heading.setForeground(Color.WHITE);
+
+                titleLabel.setForeground(Color.WHITE);
+                amountLabel.setForeground(Color.WHITE);
+                categoryLabel.setForeground(Color.WHITE);
+                themeLabel.setForeground(Color.WHITE);        
+
+                table.getTableHeader().setBackground(
+                    new Color(60,60,60)
+                );
+
+                table.getTableHeader().setForeground(
+                    Color.WHITE
+                );
+
+            } else {
+
+                content.setBackground(Color.WHITE);
+
+                sidebar.setBackground(new Color(20,20,20));
+
+                table.setBackground(Color.WHITE);
+                table.setForeground(Color.BLACK);
+                totalLabel.setForeground(Color.BLACK);
+
+                heading.setForeground(Color.BLACK);
+
+                titleLabel.setForeground(Color.BLACK);
+                amountLabel.setForeground(Color.BLACK);
+                categoryLabel.setForeground(Color.BLACK);
+                themeLabel.setForeground(Color.BLACK);
+
+                table.getTableHeader().setBackground(
+                    Color.WHITE
+                );
+
+                table.getTableHeader().setForeground(
+                    Color.BLACK
+                );
+            }
+        });
+        
         setVisible(true);
     }
 
