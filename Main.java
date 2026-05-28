@@ -17,8 +17,18 @@ public class Main extends JFrame {
     DefaultTableModel model;
 
     JLabel totalLabel;
+    JLabel foodLabel;
+    JLabel travelLabel;
+    JLabel shoppingLabel;
+    JLabel billsLabel;
+    JLabel otherLabel;
 
     double totalExpense = 0;
+    double foodTotal = 0;
+    double travelTotal = 0;
+    double shoppingTotal = 0;
+    double billsTotal = 0;
+    double otherTotal = 0;
 
     boolean darkMode = true;
 
@@ -224,6 +234,21 @@ public class Main extends JFrame {
         totalLabel.setFont(new Font("Arial", Font.BOLD, 20));
         totalLabel.setBounds(400, 470, 250, 40);
 
+        foodLabel = new JLabel("Food: ₹0");
+        foodLabel.setBounds(400, 500, 200, 30);
+
+        travelLabel = new JLabel("Travel: ₹0");
+        travelLabel.setBounds(400, 530, 200, 30);
+
+        shoppingLabel = new JLabel("Shopping: ₹0");
+        shoppingLabel.setBounds(400, 560, 200, 30);
+
+        billsLabel = new JLabel("Bills: ₹0");
+        billsLabel.setBounds(400, 590, 200, 30);
+
+        otherLabel = new JLabel("Others: ₹0.0");
+        otherLabel.setBounds(400, 620, 200, 30);
+
         // Add Components
         heading.setForeground(
         new Color(0,170,255));
@@ -254,6 +279,12 @@ public class Main extends JFrame {
 
         content.add(deleteBtn);
 
+        content.add(foodLabel);
+        content.add(travelLabel);
+        content.add(shoppingLabel);
+        content.add(billsLabel);
+        content.add(otherLabel);
+
         // Add Panels
         mainPanel.add(sidebar, BorderLayout.WEST);
         mainPanel.add(content, BorderLayout.CENTER);
@@ -262,6 +293,7 @@ public class Main extends JFrame {
 
         // Load Data
         loadExpenses();
+        updateTotal();
 
         // Save Expense
         saveBtn.addActionListener(e -> {
@@ -273,18 +305,40 @@ public class Main extends JFrame {
             String category =
                     categoryBox.getSelectedItem().toString();
 
+
             if(title.isEmpty() || amountText.isEmpty()) {
 
                 JOptionPane.showMessageDialog(
                         null,
                         "Please Fill All Fields"
                 );
+  
 
                 return;
             }
 
             double amount =
                     Double.parseDouble(amountText);
+
+            if(category.equals("Food")) {
+                    foodTotal += amount;
+            }
+
+            else if(category.equals("Travel")) {
+                    travelTotal += amount;
+            }
+
+            else if(category.equals("Shopping")) {
+                    shoppingTotal += amount;
+            }
+
+            else if(category.equals("Bills")) {
+                     billsTotal += amount;
+            }
+
+            else {
+                    otherTotal += amount;
+            }
 
             model.addRow(new Object[]{
                     title,
@@ -371,6 +425,12 @@ public class Main extends JFrame {
 
                 searchField.setForeground(Color.WHITE);
 
+                foodLabel.setForeground(Color.WHITE);
+                travelLabel.setForeground(Color.WHITE);
+                shoppingLabel.setForeground(Color.WHITE);
+                billsLabel.setForeground(Color.WHITE);
+                otherLabel.setForeground(Color.WHITE);
+
             } else {
 
                 content.setBackground(Color.WHITE);
@@ -403,6 +463,12 @@ public class Main extends JFrame {
                 searchField.setBackground(Color.WHITE);
 
                 searchField.setForeground(Color.BLACK);
+
+                foodLabel.setForeground(Color.BLACK);
+                travelLabel.setForeground(Color.BLACK);
+                shoppingLabel.setForeground(Color.BLACK);
+                billsLabel.setForeground(Color.BLACK);
+                otherLabel.setForeground(Color.BLACK);
             }
         });
 
@@ -449,9 +515,20 @@ public class Main extends JFrame {
     // Update Total
     void updateTotal() {
 
+
         totalLabel.setText(
                 "Total Expense: ₹" + totalExpense
         );
+
+        foodLabel.setText("Food: ₹" + foodTotal);
+
+        travelLabel.setText("Travel: ₹" + travelTotal);
+
+        shoppingLabel.setText("Shopping: ₹" + shoppingTotal);
+
+        billsLabel.setText("Bills: ₹" + billsTotal);
+
+        otherLabel.setText("Other: ₹" + otherTotal);
     }
 
     // Save Expense
