@@ -3,3 +3,4 @@ pasta,150.0,Food
 skincare,2800.0,Shopping
 manali,80000.0,Travel
 cold coffe,220.0,Food
+pizza,880.0,Food

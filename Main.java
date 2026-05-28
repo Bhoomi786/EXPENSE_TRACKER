@@ -2,6 +2,7 @@ import java.awt.*;
 import java.io.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 public class Main extends JFrame {
 
@@ -33,6 +34,7 @@ public class Main extends JFrame {
 
         // Window
         setTitle("Expense Tracker Pro");
+        getContentPane().setBackground(Color.WHITE);
         setSize(1000, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -72,7 +74,9 @@ public class Main extends JFrame {
         // Heading
         JLabel heading = new JLabel("Expense Manager");
         heading.setForeground(Color.BLACK);
-        heading.setFont(new Font("Arial", Font.BOLD, 28));
+        heading.setFont(
+        new Font("Segoe UI", Font.BOLD, 30));
+
         heading.setBounds(40, 20, 400, 40);
 
         // Title
@@ -88,6 +92,12 @@ public class Main extends JFrame {
 
         amountField = new JTextField();
         amountField.setBounds(140, 160, 220, 35);
+
+        titleField.setFont(
+            new Font("Segoe UI", Font.PLAIN, 15));
+
+        amountField.setFont(
+            new Font("Segoe UI", Font.PLAIN, 15));
 
         // Category
         JLabel categoryLabel = new JLabel("Category");
@@ -106,9 +116,16 @@ public class Main extends JFrame {
 
         JLabel themeLabel = new JLabel("Theme");
 
-        themeLabel.setBounds(760, 40, 100, 30);
+        themeLabel.setBounds(800, 40, 80, 30);
 
         themeLabel.setFont(new Font("Arial", Font.BOLD, 18));
+
+        JLabel searchLabel = new JLabel("Search");
+
+        searchLabel.setBounds(500, 40, 80, 30);
+
+        searchLabel.setFont(
+                new Font("Segoe UI", Font.BOLD, 18));
 
         String[] themes = {"Dark", "Light"};
 
@@ -116,7 +133,20 @@ public class Main extends JFrame {
         new JComboBox<>(themes);
         themeBox.setSelectedItem("Light");
 
-        themeBox.setBounds(840, 40, 140, 35);
+        themeBox.setBounds(880, 40, 140, 35);
+
+        JTextField searchField = new JTextField();
+
+        searchField.setBounds(580, 40, 180, 35);
+
+        searchField.setFont(
+             new Font("Segoe UI", Font.PLAIN, 15));
+
+        categoryBox.setFont(
+            new Font("Segoe UI", Font.PLAIN, 15));
+
+        themeBox.setFont(
+            new Font("Segoe UI", Font.PLAIN, 15));
 
         // Buttons
         JButton saveBtn = new JButton("Save Expense");
@@ -125,11 +155,19 @@ public class Main extends JFrame {
         JButton deleteBtn = new JButton("Delete Selected");
         deleteBtn.setBounds(700, 470, 180, 40);
 
-        saveBtn.setBackground(new Color(0, 120, 215));
+        saveBtn.setBackground(
+        new Color(0,170,255));
         saveBtn.setForeground(Color.WHITE);
 
-        deleteBtn.setBackground(new Color(200, 50, 50));
+       deleteBtn.setBackground(
+        new Color(220,70,70));
         deleteBtn.setForeground(Color.WHITE);
+
+        saveBtn.setFont(
+            new Font("Segoe UI", Font.BOLD, 16));
+
+        deleteBtn.setFont(
+            new Font("Segoe UI", Font.BOLD, 16));
 
         // Table
         String columns[] = {
@@ -141,6 +179,39 @@ public class Main extends JFrame {
         model = new DefaultTableModel(columns, 0);
 
         table = new JTable(model);
+
+        TableRowSorter<DefaultTableModel> sorter =
+             new TableRowSorter<>(model);
+
+        table.setRowSorter(sorter);
+
+        table.setRowHeight(35);
+
+        table.setBackground(new Color(35,35,50));
+
+        table.setForeground(Color.WHITE);
+
+        table.setGridColor(new Color(60,60,80));
+
+        table.setSelectionBackground(
+                new Color(0,170,255)
+        );
+
+       table.setFont(
+            new Font("Segoe UI", Font.PLAIN, 15)
+        );
+
+        table.getTableHeader().setBackground(
+                new Color(0,170,255)
+        );
+
+        table.getTableHeader().setForeground(
+                Color.WHITE
+        );
+
+        table.getTableHeader().setFont(
+                new Font("Segoe UI", Font.BOLD, 15)
+        );
 
         table.setRowHeight(30);
 
@@ -154,6 +225,9 @@ public class Main extends JFrame {
         totalLabel.setBounds(400, 470, 250, 40);
 
         // Add Components
+        heading.setForeground(
+        new Color(0,170,255));
+
         content.add(heading);
 
         content.add(titleLabel);
@@ -167,6 +241,10 @@ public class Main extends JFrame {
 
         content.add(themeLabel);
         content.add(themeBox);
+
+        content.add(searchLabel);
+
+        content.add(searchField);
 
         content.add(saveBtn);
 
@@ -261,11 +339,11 @@ public class Main extends JFrame {
 
             if(selectedTheme.equals("Dark")) {
 
-                content.setBackground(new Color(30,30,30));
+                content.setBackground(new Color(24,24,36));
 
-                sidebar.setBackground(new Color(15,15,15));
+                sidebar.setBackground(new Color(18,18,28));
 
-                table.setBackground(new Color(45,45,45));
+                table.setBackground(new Color(35,35,50));
                 table.setForeground(Color.WHITE);
                 totalLabel.setForeground(Color.WHITE);
 
@@ -283,12 +361,21 @@ public class Main extends JFrame {
                 table.getTableHeader().setForeground(
                     Color.WHITE
                 );
+                getContentPane().setBackground(
+                    new Color(24,24,36));
+
+                searchLabel.setForeground(Color.WHITE);
+
+                searchField.setBackground(
+                        new Color(45,45,60));
+
+                searchField.setForeground(Color.WHITE);
 
             } else {
 
                 content.setBackground(Color.WHITE);
 
-                sidebar.setBackground(new Color(20,20,20));
+                sidebar.setBackground(new Color(240,240,240));
 
                 table.setBackground(Color.WHITE);
                 table.setForeground(Color.BLACK);
@@ -308,6 +395,39 @@ public class Main extends JFrame {
                 table.getTableHeader().setForeground(
                     Color.BLACK
                 );
+
+                getContentPane().setBackground(Color.WHITE);
+
+                searchLabel.setForeground(Color.BLACK);
+
+                searchField.setBackground(Color.WHITE);
+
+                searchField.setForeground(Color.BLACK);
+            }
+        });
+
+        searchField.addKeyListener(
+                new java.awt.event.KeyAdapter() {
+
+            public void keyReleased(
+                java.awt.event.KeyEvent e
+            ) {
+
+                String text =
+                    searchField.getText();
+
+                if(text.length() == 0) {
+
+                    sorter.setRowFilter(null);
+
+                } else {
+
+                    sorter.setRowFilter(
+                        RowFilter.regexFilter(
+                            "(?i)" + text
+                        )
+                    );
+                }
             }
         });
         

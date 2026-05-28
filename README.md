@@ -10,6 +10,7 @@ A modern GUI-based Expense Tracker application built using Java Swing.
 - Category Selection
 - Permanent File Storage
 - Modern GUI Design
+- Light and Dark Theme Support
 
 ## Technologies Used
 
