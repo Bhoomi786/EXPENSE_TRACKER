@@ -3,6 +3,13 @@ import java.io.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import org.jfree.chart.ChartFactory;
+
+import org.jfree.chart.ChartPanel;
+
+import org.jfree.chart.JFreeChart;
+
+import org.jfree.data.general.DefaultPieDataset;
 
 public class Main extends JFrame {
 
@@ -15,6 +22,7 @@ public class Main extends JFrame {
 
     JTable table;
     DefaultTableModel model;
+    DefaultPieDataset dataset;
 
     JLabel totalLabel;
     JLabel foodLabel;
@@ -152,6 +160,13 @@ public class Main extends JFrame {
         searchField.setFont(
              new Font("Segoe UI", Font.PLAIN, 15));
 
+            searchField.setBorder(
+                BorderFactory.createLineBorder(
+                         new Color(0,191,255),
+                             2
+                )
+            );
+
         categoryBox.setFont(
             new Font("Segoe UI", Font.PLAIN, 15));
 
@@ -189,6 +204,8 @@ public class Main extends JFrame {
         model = new DefaultTableModel(columns, 0);
 
         table = new JTable(model);
+        table.getTableHeader().setFont(
+            new Font("Segoe UI", Font.BOLD, 18));
 
         TableRowSorter<DefaultTableModel> sorter =
              new TableRowSorter<>(model);
@@ -263,6 +280,41 @@ public class Main extends JFrame {
 
         content.add(categoryLabel);
         content.add(categoryBox);
+
+        dataset =
+            new DefaultPieDataset();
+
+        dataset.setValue("Food", foodTotal);
+
+        dataset.setValue("Travel", travelTotal);
+
+        dataset.setValue("Shopping", shoppingTotal);
+
+        dataset.setValue("Bills", billsTotal);
+
+        dataset.setValue("Other", otherTotal);
+
+        JFreeChart pieChart =
+            ChartFactory.createPieChart(
+                "Expense Distribution",
+                dataset,
+                true,
+                true,
+                false
+            );
+            pieChart.getTitle().setPaint(Color.WHITE);
+            pieChart.setBackgroundPaint(
+                    new Color(45,45,45));
+                    
+
+        ChartPanel chartPanel =
+            new ChartPanel(pieChart);
+
+        chartPanel.setBounds(220, 420, 360, 220);
+        chartPanel.setBackground(
+                new Color(45,45,45));
+
+        add(chartPanel);
 
         content.add(themeLabel);
         content.add(themeBox);
@@ -529,6 +581,16 @@ public class Main extends JFrame {
         billsLabel.setText("Bills: ₹" + billsTotal);
 
         otherLabel.setText("Other: ₹" + otherTotal);
+
+        dataset.setValue("Food", foodTotal);
+
+        dataset.setValue("Travel", travelTotal);
+
+        dataset.setValue("Shopping", shoppingTotal);
+
+        dataset.setValue("Bills", billsTotal);
+
+        dataset.setValue("Other", otherTotal);
     }
 
     // Save Expense
